@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emergency Mesh Survival Board</title>
+  <style>
+    /* Basic Page Setup */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333333;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    /* Top Red Ticker / Marquee */
+    .ticker-bar {
+      background-color: #d9534f;
+      color: white;
+      padding: 10px;
+      font-weight: bold;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 2px solid #b52b27;
+    }
+
+    .ticker-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background-color: white;
+      padding: 20px;
+      border: 1px solid #cccccc;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #222222;
+      border-bottom: 2px solid #333333;
+      padding-bottom: 8px;
+      margin-top: 0;
+    }
+
+    h2 {
+      font-size: 18px;
+      color: #444444;
+      margin-top: 25px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+    }
+
+    .info-box {
+      background-color: #eef7ed;
+      border: 1px solid #c3e6cb;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    /* Simple Form Styles */
+    form {
+      background-color: #f9f9f9;
+      border: 1px solid #dddddd;
+      padding: 15px;
+      margin-bottom: 30px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    button {
+      margin-top: 12px;
+      background-color: #333333;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background-color: #555555;
+    }
+
+    /* Post Feed Styles */
+    .post-list {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .post-item {
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      margin-bottom: 15px;
+      background-color: #ffffff;
+    }
+
+    .post-header {
+      font-size: 12px;
+      color: #666666;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      background-color: #777777;
+      color: white;
+      padding: 2px 6px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .badge-alert { background-color: #d9534f; }
+    .badge-water { background-color: #0275d8; }
+    .badge-trade { background-color: #f0ad4e; }
+
+    .post-title {
+      font-size: 16px;
+      font-weight: bold;
+      margin: 5px 0;
+    }
+
+    .post-content {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    .comment-box {
+      background-color: #f8f9fa;
+      border-left: 3px solid #ccc;
+      padding: 8px;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #888888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Emergency Ticker -->
+  <div class="ticker-bar">
+    <div class="ticker-text">
+      ⚠️ [EMERGENCY MESH NOTICE] Sector 4 Clean Water Station Active (09:00 - 15:00) | Limited bandwidth mode enabled. | Share resources with neighbors.
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>🌐 Local Emergency Information Board (Providence Node #04)</h1>
+    
+    <div class="info-box">
+      <strong>NOTICE:</strong> This low-bandwidth web board was set up by local residents during the ongoing crisis to share survival news, safe zone updates, clean water locations, and mutual aid requests.
+    </div>
+
+    <!-- Post Creation Form -->
+    <h2>Submit a Local Report</h2>
+    <form action="#" method="get">
+      <label for="author">Author / Location (e.g., Resident Sector 3):</label>
+      <input type="text" id="author" placeholder="Enter your name or location">
+
+      <label for="category">Category:</label>
+      <select id="category">
+        <option>Hazard Warning</option>
+        <option>Food / Water Supply</option>
+        <option>Safe Zone / Shelter</option>
+        <option>Barter / Request</option>
+      </select>
+
+      <label for="title">Title:</label>
+      <input type="text" id="title" placeholder="Brief summary title">
+
+      <label for="message">Message Details:</label>
+      <textarea id="message" rows="4" placeholder="Share confirmed details, coordinates, or time..."></textarea>
+
+      <button type="button">Submit Dispatch (Demo)</button>
+    </form>
+
+    <!-- Post Feed -->
+    <h2>Live Community Dispatches</h2>
+    <ul class="post-list">
+      
+      <!-- Post 1 -->
+      <li class="post-item">
+        <div class="post-header">
+          <span class="badge badge-water">Water & Food</span>
+          <span> | Posted by: Min (Sector 3) | 20 mins ago</span>
+        </div>
+        <div class="post-title">Filtered water distribution started near Central Park</div>
+        <div class="post-content">
+          Clean drinking water is being distributed behind the park administration office. 
+          The line is moving steadily. Limit is 2 liters per person. Please bring your own clean containers.
+        </div>
+        <div class="comment-box">
+          💬 <strong>Comment (Jay):</strong> Confirming this! They are also accepting batteries or canned food for barter trades nearby.
+        </div>
+      </li>
+
+      <!-- Post 2 -->
+      <li class="post-item">
+        <div class="post-header">
+          <span class="badge badge-alert">Hazard Warning</span>
+          <span> | Posted by: Sam (Sector 1) | 1 hour ago</span>
+        </div>
+        <div class="post-title">Avoid East Bridge area due to road collapse</div>
+        <div class="post-content">
+          The northern approach to East Bridge has suffered heavy structural cracking. Vehicles cannot cross. 
+          Pedestrians should use the south stone bridge instead, especially after dark.
+        </div>
+        <div class="comment-box">
+          💬 <strong>Comment (Hana):</strong> Thanks for the warning! Is the south bridge still illuminated at night?
+        </div>
+      </li>
+
+      <!-- Post 3 -->
+      <li class="post-item">
+        <div class="post-header">
+          <span class="badge badge-trade">Barter</span>
+          <span> | Posted by: Suwan (Sector 5) | 3 hours ago</span>
+        </div>
+        <div class="post-title">Trading portable stove gas canisters for AA batteries</div>
+        <div class="post-content">
+          I have 3 unused butane gas canisters. Looking to trade for 4 working AA batteries or sealed canned goods. 
+          Can meet near the Sector 5 Community Hall.
+        </div>
+      </li>
+
+    </ul>
+
+    <!-- Project Reflection for Coursework -->
+    <h2>Project Reflection</h2>
+    <p>
+      Instead of visualizing the dramatic moment of collapse, this project explores how human connection and mutual support persist in the aftermath. By mimicking a simple emergency bulletin board, the website highlights community resilience, resource sharing, and grassroots communication during survival.
+    </p>
+
+    <footer>
+      <p>© Emergency Disaster Mesh Network Node</p>
+    </footer>
+  </div>
+
+</body>
+</html>
