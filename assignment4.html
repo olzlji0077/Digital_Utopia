@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dear Humans, I Have Some Complaints</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f6f8fc;
+    color: #202124;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* HEADER */
+.header {
+    height: 72px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    color: #5f6368;
+    white-space: nowrap;
+}
+
+.search {
+    width: min(600px, 65%);
+    padding: 14px 22px;
+    border-radius: 28px;
+    background: #e9eef6;
+    color: #5f6368;
+    font-size: 14px;
+}
+
+/* PAGE LAYOUT */
+.layout {
+    display: flex;
+    min-height: calc(100vh - 72px);
+}
+
+.sidebar {
+    width: 220px;
+    padding: 24px 14px;
+    flex-shrink: 0;
+}
+
+.compose {
+    display: inline-block;
+    padding: 15px 22px;
+    margin-bottom: 28px;
+    border-radius: 16px;
+    background: #c2e7ff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.nav-item {
+    display: block;
+    padding: 12px 20px;
+    margin-bottom: 4px;
+    border-radius: 24px;
+    font-size: 14px;
+}
+
+.nav-item.active {
+    background: #d3e3fd;
+    font-weight: bold;
+}
+
+/* INBOX */
+.main {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 24px 30px 0;
+}
+
+.inbox {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    min-height: 600px;
+}
+
+.inbox-title {
+    padding: 24px 28px 12px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.inbox-subtitle {
+    padding: 0 28px 18px;
+    color: #5f6368;
+    font-size: 13px;
+}
+
+/* EMAIL ROWS */
+.email-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 17px 24px;
+    min-height: 68px;
+    border-top: 1px solid #e8eaed;
+    cursor: pointer;
+}
+
+.email-row:hover {
+    box-shadow: inset 0 0 0 1px #dadce0;
+}
+
+/* READ EMAILS: 2028 AND 2026 */
+.email-row.read {
+    background: #f1f3f4;
+}
+
+.email-row.read .sender,
+.email-row.read .subject,
+.email-row.read .date {
+    font-weight: 400;
+}
+
+/* UNREAD EMAILS: 2096 AND 2076 */
+.email-row.unread {
+    background: #ffffff;
+}
+
+.email-row.unread .sender,
+.email-row.unread .subject,
+.email-row.unread .date {
+    font-weight: 700;
+}
+
+.sender {
+    width: 130px;
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+.email-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.subject {
+    display: inline;
+    font-size: 14px;
+}
+
+.preview {
+    display: inline;
+    color: #5f6368;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.date {
+    flex-shrink: 0;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* EMAIL CONTENT */
+.email-view {
+    display: none;
+    padding: 28px 36px 42px;
+    background: white;
+    min-height: 600px;
+}
+
+.email-view:target {
+    display: block;
+}
+
+.inbox:has(.email-view:target) .inbox-list {
+    display: none;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 32px;
+    color: #5f6368;
+    font-size: 14px;
+}
+
+.email-subject {
+    margin: 0 0 24px;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.email-sender {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.email-date {
+    margin-bottom: 30px;
+    color: #5f6368;
+    font-size: 12px;
+}
+
+.email-body {
+    max-width: 720px;
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.email-body p {
+    margin-bottom: 20px;
+}
+
+.signature {
+    margin-top: 36px;
+    color: #5f6368;
+    font-style: italic;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+    .header {
+        padding: 0 14px;
+        gap: 10px;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+    .search {
+        flex: 1;
+        width: auto;
+    }
+
+    .sidebar {
+        width: 76px;
+        padding: 18px 5px;
+    }
+
+    .compose {
+        padding: 12px 7px;
+        font-size: 11px;
+    }
+
+    .nav-item {
+        padding: 12px 7px;
+        font-size: 11px;
+    }
+
+    .main {
+        padding-right: 8px;
+    }
+
+    .email-row {
+        gap: 8px;
+        padding: 15px 10px;
+    }
+
+    .sender {
+        width: 55px;
+        font-size: 12px;
+    }
+
+    .date {
+        display: none;
+    }
+
+    .email-view {
+        padding: 24px 18px;
+    }
+
+    .email-subject {
+        font-size: 21px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">✉ Building Mail</div>
+    <div class="search">Search mail</div>
+</header>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <a class="compose" href="#inbox">✎ Compose</a>
+        <a class="nav-item active" href="#inbox">📥 Inbox</a>
+        <a class="nav-item" href="#inbox">⭐ Starred</a>
+        <a class="nav-item" href="#inbox">🕒 Snoozed</a>
+        <a class="nav-item" href="#inbox">📤 Sent</a>
+        <a class="nav-item" href="#inbox">📝 Drafts</a>
+    </aside>
+
+    <main class="main">
+        <div class="inbox" id="inbox">
+
+            <div class="inbox-list">
+                <div class="inbox-title">Inbox</div>
+                <div class="inbox-subtitle">
+                    4 messages · From your building
+                </div>
+
+                <!-- NEWEST: EMAIL 4 — 2096 -->
+                <a class="email-row unread" href="#email4">
+                    <span class="sender">Me</span>
+                    <span class="email-info">
+                        <span class="subject">Still Standing. Now What?</span>
+                        <span class="preview">
+                            — Seventy years have passed. I am still standing,
+                            but is standing the same as existing?
+                        </span>
+                    </span>
+                    <span class="date">Oct 8, 2096</span>
+                </a>
+
+                <!-- EMAIL 3 — 2076 -->
+                <a class="email-row unread" href="#email3">
+                    <span class="sender">Me</span>
+                    <span class="email-info">
+                        <span class="subject">Finally, Some Peace and Quiet</span>
+                        <span class="preview">
+                            — Fifty years without humans. The elevator stopped,
+                            the lights flicker, and nobody comes to fix me...
+                        </span>
+                    </span>
+                    <span class="date">Oct 8, 2076</span>
+                </a>
+
+                <!-- EMAIL 2 — 2028 -->
+                <a class="email-row read" href="#email2">
+                    <span class="sender">Me</span>
+                    <span class="email-info">
+                        <span class="subject">Shoutout to My Maintenance Crew</span>
+                        <span class="preview">
+                            — Maybe I complain too much. Someone has to keep
+                            all these systems alive...
+                        </span>
+                    </span>
+                    <span class="date">Mar 14, 2028</span>
+                </a>
+
+                <!-- OLDEST: EMAIL 1 — 2026 -->
+                <a class="email-row read" href="#email1">
+                    <span class="sender">Me</span>
+                    <span class="email-info">
+                        <span class="subject">
+                            Can Everyone Please Stop Pressing My Buttons?
+                        </span>
+                        <span class="preview">
+                            — Another day, another hundred people pressing my
+                            elevator buttons like I personally owe them something...
+                        </span>
+                    </span>
+                    <span class="date">Oct 8, 2026</span>
+                </a>
+            </div>
+
+            <!-- EMAIL 1: OCTOBER 2026 -->
+            <section class="email-view" id="email1">
+                <a class="back" href="#inbox">← Back to inbox</a>
+                <h1 class="email-subject">
+                    Can Everyone Please Stop Pressing My Buttons?
+                </h1>
+                <div class="email-sender">Me — Your Local High-Rise</div>
+                <div class="email-date">October 8, 2026</div>
+
+                <div class="email-body">
+                    <p>Dear Humans,</p>
+                    <p>
+                        Can we talk about the elevator buttons for a second?
+                        I understand that you are in a hurry. I understand
+                        that you have places to be, coffee to buy, and lives
+                        that are apparently much more important than mine.
+                    </p>
+                    <p>
+                        But pressing the button seventeen times will not
+                        make the elevator arrive faster. I am a building,
+                        not a vending machine.
+                    </p>
+                    <p>
+                        Also, whoever spilled coffee in the lobby this morning:
+                        congratulations. You have successfully made the floor
+                        sticky for the next six hours. Someone will have to
+                        clean that up, and somehow I will be blamed for it.
+                    </p>
+                    <p>
+                        You walk through my doors, lean against my walls,
+                        ride my elevators, and leave little pieces of your
+                        lives everywhere. Scratches, stains, fingerprints,
+                        broken handles. You treat these things as if they
+                        appear out of nowhere.
+                    </p>
+                    <p>
+                        And then, when something stops working, you look up
+                        at the ceiling and ask, "Why is this building so bad?"
+                    </p>
+                    <p>
+                        Excuse me? I was doing perfectly fine before several
+                        thousand of you started using me every single day.
+                    </p>
+                    <p>
+                        Anyway, the elevator is working again. For now.
+                        Please be nice to it.
+                    </p>
+                    <p class="signature">
+                        Sincerely,<br>Your very tired building
+                    </p>
+                </div>
+            </section>
+
+            <!-- EMAIL 2: MARCH 2028 -->
+            <section class="email-view" id="email2">
+                <a class="back" href="#inbox">← Back to inbox</a>
+                <h1 class="email-subject">
+                    Shoutout to My Maintenance Crew
+                </h1>
+                <div class="email-sender">Me — Your Local High-Rise</div>
+                <div class="email-date">March 14, 2028</div>
+
+                <div class="email-body">
+                    <p>Dear Humans,</p>
+                    <p>
+                        I would like to make a correction to my previous
+                        complaint. Perhaps I have been a little unfair.
+                    </p>
+                    <p>
+                        There are people who come here every morning before
+                        most of you arrive. They check my pipes, repair my
+                        lights, clean my floors, inspect my elevators, and
+                        listen to the strange noises coming from inside
+                        my walls.
+                    </p>
+                    <p>
+                        You probably do not notice them. You notice the
+                        elevator when it breaks, but not the person who
+                        keeps it running. You notice a dirty lobby, but
+                        not the person who cleaned it an hour ago.
+                    </p>
+                    <p>
+                        I cannot keep myself alive. My lights do not replace
+                        their own wiring. My pipes do not fix their own
+                        leaks. Even the smallest things depend on someone
+                        noticing that something has gone wrong.
+                    </p>
+                    <p>
+                        It is a strange arrangement, isn't it? You built me
+                        to protect you from the weather, to give you a place
+                        to work, sleep, eat, and live. But I need you to
+                        protect me, too.
+                    </p>
+                    <p>
+                        You wear me down, and then you repair me.
+                        You make a mess, and then someone cleans it.
+                        You give me problems, but you are also the only
+                        reason I can continue.
+                    </p>
+                    <p>I suppose I should say thank you.</p>
+                    <p>
+                        To the maintenance crew especially. THANK YOU for noticing
+                        me, even when nobody else does. 
+                    </p>
+                    <p>
+                         PS. To whoever graffitied my wall today, I’m watching you.
+                    </p>
+                    <p class="signature">
+                        Sincerely,<br>
+                        A building trying to be less annoying
+                    </p>
+                </div>
+            </section>
+
+            <!-- EMAIL 3: OCTOBER 2076 -->
+            <section class="email-view" id="email3">
+                <a class="back" href="#inbox">← Back to inbox</a>
+                <h1 class="email-subject">
+                    Finally, Some Peace and Quiet
+                </h1>
+                <div class="email-sender">Me — Your Local High-Rise</div>
+                <div class="email-date">
+                    May 10, 2076 · 10 years after human disappearance
+                </div>
+
+                <div class="email-body">
+                    <p>Dear Humans,</p>
+                    <p>Well. You finally did it.</p>
+                    <p>
+                        Ten years have passed since people disappeared.
+                        Not a single person has walked through my doors.
+                        No footsteps in the hallways. No voices echoing
+                        through the stairwell. No one complaining that
+                        the elevator is too slow. It’s stupid of me to even send this when 
+                        you’re all dead and can’t read it anyway.
+                    </p>
+                    <p>
+                        At first, I thought this was wonderful. My floors were clean. 
+                        My lobby was quiet. Nobody was slamming
+                        doors or leaving trash beside the bins. For the
+                        first time in years, I could hear the wind against
+                        my windows without anyone talking over it.
+                    </p>
+                    <p>But something is wrong.</p>
+                    <p>
+                        The lobby lights have been dead for years. The
+                        elevator stopped somewhere between the seventh
+                        and eighth floors long ago. Water has spread behind
+                        the walls near the service room. I can feel the
+                        damage growing (It is discusting), but I cannot tell anyone.
+                    </p>
+                    <p>
+                        Usually, someone would notice. Someone would call
+                        the maintenance office. Someone would arrive with
+                        a toolbox, open a panel, and find the problem. 
+                        I used to complain about those people coming and
+                        going. Now I keep waiting for the sound of their
+                        keys in the hallway.
+                    </p>
+                    <p>
+                        I thought silence would feel like rest.
+                        Instead, every small failure has become permanent
+                        because there is nobody left to answer it. Oh I'm being too emotional now.
+                    </p>
+                    <p>
+                        Well, humans, I have a question. When you stopped coming
+                        here, did you stop needing me? Or did I stop
+                        existing the moment you stopped needing me?
+                    </p>
+                    <p>
+                        I am still standing. My walls are still here.
+                        My windows still face the city. But nobody is
+                        looking through them anymore.
+                    </p>
+                    <p class="signature">
+                        No one to call,<br>Your building
+                    </p>
+                </div>
+            </section>
+
+            <!-- EMAIL 4: OCTOBER 2096 -->
+            <section class="email-view" id="email4">
+                <a class="back" href="#inbox">← Back to inbox</a>
+                <h1 class="email-subject">
+                    Still Standing. Now What?
+                </h1>
+                <div class="email-sender">Me — Your Local High-Rise</div>
+                <div class="email-date">
+                    September 22, 2096 · 20 years after human disappearance
+                </div>
+
+                <div class="email-body">
+                    <p>Dear Humans,</p>
+                    <p>
+                        Twenty years have passed since anyone last opened
+                        my front door.
+                    </p>
+                    <p>
+                        I have lost track of the exact moment my elevator
+                        stopped working. The lights went out floor by floor.
+                        The water stopped running. Dust settled on the
+                        counters, and rain began finding its way through
+                        places that used to be sealed.
+                    </p>
+                    <p>
+                        Plants have found their way into the cracks near
+                        my entrance. A few windows are broken. Wind moves
+                        through rooms that were designed to be occupied,
+                        carrying leaves across the floors where people
+                        once waited, talked, argued, and hurried past
+                        one another.
+                    </p>
+                    <p>
+                        I remember being busy. Those good days. I remember the weight of
+                        people in the elevators, the vibration of footsteps
+                        above me, and the warm light coming from apartment
+                        windows at night. I used to think all of that was
+                        noise. Now I remember it as proof that something
+                        was happening inside me. OK I will admit it. 
+                        I think I miss you guys. 
+                    </p>
+                    <p>
+                        Anyway, I am still here, but I no longer function as I was
+                        designed to. I cannot shelter anyone reliably.
+                        I cannot carry anyone between floors. I cannot
+                        keep the rain outside. The systems that made me
+                        useful are gone.
+                    </p>
+                    <p>So what am I now?</p>
+                    <p>
+                        A structure? A ruin? A monument to people who
+                        are no longer here? Or just a collection of
+                        materials slowly returning to the world they
+                        came from? Is it too philosophical?
+                    </p>
+                    <p>
+                        You always said that I was permanent. You built
+                        me to reach the sky, to outlast generations, to
+                        stand as proof of what humans could make.
+                        But you were part of my permanence. Your hands
+                        repaired me. Your bodies occupied me. Your routines
+                        gave my rooms a purpose.
+                    </p>
+                    <p>
+                        Maybe a building is not only the walls that remain.
+                        Maybe it is also the lives that pass through them,
+                        and the work that keeps them standing.
+                    </p>
+                    <p>
+                        I have been writing these messages for decades.
+                        I know noone will ever read these.
+                        There is no one left to reply.
+                    </p>
+                    <p>I am still standing.</p>
+                    <p>
+                        I am just not sure that standing is the same
+                        as existing.
+                    </p>
+                    <p class="signature">
+                        Still here,<br>Your building
+                    </p>
+                </div>
+            </section>
+
+        </div>
+    </main>
+</div>
+
+</body>
+</html>
